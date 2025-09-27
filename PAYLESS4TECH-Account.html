@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <!-- Add this in your <head> to load the icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+  <title>Account</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url("images/background.jpg");
+      background-size: cover;
+      color: #e8ecf1;
+      flex-direction: column;
+      margin: 0;
+      /* keep header inside the viewport */
+* { box-sizing: border-box; }
+html, body { overflow-x: hidden; }  /* stops horizontal creep */
+
+    }
+    /* ===== Header / Nav ===== */
+header {
+  background:rgba(11,16,32,.75);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  position: fixed;  
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;      /* make sure it’s above other content */
+}
+
+header .logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+header .logo span {
+  color: #ffcc00;
+}
+
+nav {
+  display: flex;
+}
+
+nav a {
+  color: #fff;
+  margin-left: 20px;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+nav a.active {
+  border-bottom: 2px solid #ffcc00;
+  padding-bottom: 2px;
+}
+
+/* Hamburger (hidden on desktop) */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 8px;          /* bigger tap area */
+  margin-left: auto;     /* sticks to the right inside header */
+  z-index: 1100;         /* above dropdown */
+}
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background: #fff;
+  margin: 4px 0;
+  border-radius: 2px;
+}
+
+
+/* Mobile nav (hidden by default) */
+.mobile-nav {
+  display: none;
+  flex-direction: column;
+  position: fixed;                   /* was absolute */
+  top: 60px;                         /* sits just under the fixed header */
+  right: 16px;                       /* pull it inside the screen edge */
+  width: min(220px, calc(100vw - 32px)); /* never exceed viewport */
+  background: #0b3d91;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 12px 24px rgba(0,0,0,.35);
+  z-index: 1100;
+}
+.mobile-nav a {
+  color: #fff;
+  margin: 10px 0;
+  text-decoration: none;
+  font-size: 16px;
+  white-space: nowrap;               /* links don’t wrap weirdly */
+}
+footer {
+      background: #0b3d91;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+    }
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+  nav {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+}
+
+    .container {
+      background: #111631;
+      padding: 30px;
+      border-radius: 12px;
+      width: 350px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      margin: 120px auto;  /* centers below header */
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+    }
+    .btn {
+      width: 100%;
+      padding: 10px;
+      background: #6ea8fe;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .btn:hover {
+      background: #5a92e8;
+    }
+    .toggle {
+      text-align: center;
+      margin-top: 15px;
+      cursor: pointer;
+      color: #f6fe02;
+    }
+    .eye {
+      position: absolute;
+      right: 10px;
+      top: 30px;
+      cursor: pointer;
+    }
+    .password-container {
+      position: relative;
+    }
+    a {
+      color: #f6fe02;
+      font-size: 14px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<!-- ===== Header / Nav ===== -->
+<header>
+  <div class="logo">PAYLESS<span>4TECH</span></div>
+
+  <!-- Desktop Nav -->
+  <nav id="mainNav"></nav>
+
+  <div class="hamburger" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav"></div>
+</header>
+
+
+  <div class="container">
+    <h2 id="form-title">Login</h2>
+    
+    <!-- Login Form -->
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="loginUser">Username or Email</label>
+        <input type="text" id="loginUser" required>
+      </div>
+      <div class="form-group password-container">
+        <label for="loginPass">Password</label>
+        <input type="password" id="loginPass" required>
+        <span class="eye" onclick="togglePassword('loginPass')">👁️‍🗨️</span>
+      </div>
+      <button type="submit" class="btn">Login</button>
+      <div style="text-align:center; margin-top:10px;">
+        <a href="forgot-password.html">Forgot password?</a>
+      </div>
+    </form>
+
+    <!-- Register Form -->
+<form id="registerForm" style="display:none;">
+  <div class="form-group">
+    <label for="regEmail">Email Address</label>
+    <input type="email" id="regEmail" required>
+  </div>
+  <div class="form-group">
+    <label for="regUser">Username</label>
+    <input type="text" id="regUser" required>
+  </div>
+  <div class="form-group password-container">
+    <label for="regPass">Password</label>
+    <input type="password" id="regPass" required>
+    <span class="eye" onclick="togglePassword('regPass')">👁️‍🗨️</span>
+  </div>
+  <div class="form-group">
+    <label for="regFirst">First Name</label>
+    <input type="text" id="regFirst" required>
+  </div>
+  <div class="form-group">
+    <label for="regLast">Last Name</label>
+    <input type="text" id="regLast" required>
+  </div>
+  <div class="form-group">
+    <label for="regPhone">Phone Number</label>
+    <input type="tel" id="regPhone" required>
+  </div>
+
+  <!-- ✅ Admin Secret Code -->
+  <div class="form-group">
+    <label for="regAdminKey">Admin Code (optional)</label>
+    <input type="text" id="regAdminKey" placeholder="Leave empty if not admin">
+  </div>
+
+  <button type="submit" class="btn">Register</button>
+</form>
+
+
+    <div class="toggle" onclick="toggleForms()">Don't have an account? Register</div>
+  </div>
+
+
+   <!-- ===== Footer Placeholder ===== -->
+<div id="footer-placeholder"></div>
+
+  <script>
+   // ---- SEED DEFAULT ADMINS (stored in the same paylessUsers array) ----
+(() => {
+  const defaultAdmins = [
+    { email: "superadmin@payless.com", username: "superadmin", password: "admin123", role: "admin", phone: "0244000001" },
+    { email: "admin@example.com", username: "admin", password: "12345", role: "admin", phone: "0244000002" },
+    { email: "owner@example.com", username: "owner", password: "67890", role: "admin", phone: "0244000003" }
+  ];
+
+  let users = JSON.parse(localStorage.getItem("paylessUsers") || "[]");
+
+  defaultAdmins.forEach(def => {
+    if (!users.some(u => u.email === def.email)) {
+      users.push(def);
+    }
+  });
+
+  localStorage.setItem("paylessUsers", JSON.stringify(users));
+})();
+
+  function togglePassword(id) {
+    const input = document.getElementById(id);
+    input.type = input.type === "password" ? "text" : "password";
+  }
+
+  function toggleForms() {
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+    const formTitle = document.getElementById("form-title");
+    const toggleText = document.querySelector(".toggle");
+
+    if (loginForm.style.display === "none") {
+      loginForm.style.display = "block";
+      registerForm.style.display = "none";
+      formTitle.innerText = "Login";
+      toggleText.innerText = "Don't have an account? Register";
+    } else {
+      loginForm.style.display = "none";
+      registerForm.style.display = "block";
+      formTitle.innerText = "Register";
+      toggleText.innerText = "Already have an account? Login";
+    }
+  }
+
+ // Save to localStorage on register
+document.getElementById("registerForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  let users = JSON.parse(localStorage.getItem("paylessUsers") || "[]");
+
+  // Check Admin Code
+  const ADMIN_SECRET = "MYSECRET123"; // change this
+  let role = "user";
+  const enteredKey = document.getElementById("regAdminKey").value.trim();
+  if (enteredKey === ADMIN_SECRET) {
+    role = "admin";
+  }
+
+  const newUser = {
+    email: document.getElementById("regEmail").value.trim(),
+    username: document.getElementById("regUser").value.trim(),
+    password: document.getElementById("regPass").value,
+    first: document.getElementById("regFirst").value.trim(),
+    last: document.getElementById("regLast").value.trim(),
+    phone: document.getElementById("regPhone").value.trim(),
+    role: role
+  };
+
+  // Check if email already exists
+  const exists = users.some(u => u.email.toLowerCase() === newUser.email.toLowerCase());
+  if (exists) {
+    alert("This email is already registered. Please log in.");
+    return;
+  }
+
+  users.push(newUser);
+  localStorage.setItem("paylessUsers", JSON.stringify(users));
+
+  // Log in the new user and go to user account
+  localStorage.setItem("paylessUser", JSON.stringify(newUser));
+  if (role === "admin") {
+    window.location.href = "PAYLESS4TECH-Admin-dashboard.html";
+  } else {
+    window.location.href = "PAYLESS4TECH-Useraccount.html";
+  }
+});
+
+// ---- LOGIN CHECK (admins & users together) ----
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const users = JSON.parse(localStorage.getItem("paylessUsers") || "[]");
+  const username = document.getElementById("loginUser").value.trim();
+  const password = document.getElementById("loginPass").value;
+
+  const foundUser = users.find(u =>
+    (username.toLowerCase() === u.email.toLowerCase() || username === u.username) &&
+    password === u.password
+  );
+
+  if (!foundUser) {
+    alert("Invalid credentials. Try again.");
+    return;
+  }
+
+  // Save the logged-in account
+  localStorage.setItem("paylessUser", JSON.stringify(foundUser));
+
+  // Redirect by role
+  if (foundUser.role === "admin") {
+    window.location.href = "PAYLESS4TECH-Admin-dashboard.html";
+  } else {
+    window.location.href = "PAYLESS4TECH-Useraccount.html";
+  }
+});
+
+
+ // Toggle mobile menu
+  function toggleMenu() {
+    const nav = document.getElementById("mobileNav");
+    nav.style.display = nav.style.display === "flex" ? "none" : "flex";
+  }
+
+  // Build nav dynamically (desktop + mobile)
+  function buildNav(container, user) {
+    container.innerHTML = `
+      <a href="index.html">Home 🏠︎</a>
+      <a href="PAYLESS4TECH-shop.html">Shop 𖠩</a>
+      <a href="favorites.html">Favorites ★</a>
+      <a href="about.html">About ⓘ</a>
+    `;
+
+    if (user) {
+      if (user.role === "admin") {
+        container.innerHTML += `<a href="PAYLESS4TECH-Admin-dashboard.html">Admin Dashboard 🛡️</a>`;
+      } else {
+        container.innerHTML += `<a href="PAYLESS4TECH-Useraccount.html">Profile 𖨆</a>`;
+      }
+      container.innerHTML += `<a href="#" onclick="logout()">Logout ⤷</a>`;
+    } else {
+      container.innerHTML += `<a href="PAYLESS4TECH-Account.html">Account 👤</a>`;
+    }
+  }
+
+  // Run after page loads
+  document.addEventListener("DOMContentLoaded", () => {
+    const user = JSON.parse(localStorage.getItem("paylessUser"));
+    const mainNav = document.getElementById("mainNav");
+    const mobileNav = document.getElementById("mobileNav");
+
+    buildNav(mainNav, user);
+    buildNav(mobileNav, user);
+  });
+
+  // Logout function
+  function logout() {
+    localStorage.removeItem("paylessUser");
+    alert("Logged out!");
+    window.location.href = "index.html";
+  }
+
+  fetch("footer.html")
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById("footer-placeholder").innerHTML = data;
+    })
+    .catch(error => console.error("Error loading footer:", error));
+
+</script>
+
+</body>
+</html>
